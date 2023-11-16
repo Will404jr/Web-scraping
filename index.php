@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Job Listings</title>
-    <!-- Include Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
 
@@ -62,7 +61,6 @@
                     echo "<tr><td colspan='3'>No records found</td></tr>";
                 }
 
-                // Close the database connection
                 mysqli_close($con);
                 ?>
             </tbody>
@@ -114,7 +112,6 @@
     <canvas id="skillsChart" width="300" height="100"></canvas>
 
 
-    <!-- Include Bootstrap JS and jQuery -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@1.16.1/dist/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
@@ -127,7 +124,6 @@
             'rgba(54, 162, 235, 0.6)',
             'rgba(255, 206, 86, 0.6)',
             'rgba(153, 102, 255, 0.6)',
-            // Add more colors as needed
         ];
 
         var ctx = document.getElementById('skillsChart').getContext('2d');
@@ -138,7 +134,7 @@
                 datasets: [{
                     label: 'Number of Companies',
                     data: <?php echo json_encode($chartSkillCounts); ?>,
-                    backgroundColor: skillColors, // Use the array of colors
+                    backgroundColor: skillColors,
                     borderColor: 'rgba(75, 192, 192, 1)',
                     borderWidth: 1
                 }]
@@ -161,10 +157,8 @@
 </html>
 
 <?php
-// Include your database connection code
 include('connect.php');
 
-// CSV file path
 $csv_file = '_cms_scrape4.csv';
 
 // Open and read the CSV file
@@ -177,7 +171,6 @@ if (($handle = fopen($csv_file, 'r')) !== false) {
         $skillsRequired = mysqli_real_escape_string($con, $data[1]);
         $moreInformation = mysqli_real_escape_string($con, $data[2]);
 
-        // Create SQL query to insert data into the database
         $sql = "INSERT INTO jobs (companyName, skillsRequired, moreInformation) 
         VALUES ('$companyName', '$skillsRequired', '$moreInformation')";
 
@@ -193,10 +186,8 @@ if (($handle = fopen($csv_file, 'r')) !== false) {
     echo "Error opening CSV file.";
 }
 
-// Close the database connection
 mysqli_close($con);
 
-// Use JavaScript to refresh the page after the code execution
 echo '<script>
     if (!window.location.search.includes("refreshed=true")) {
         window.location.href = "index.php?refreshed=true";
